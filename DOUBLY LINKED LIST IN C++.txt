@@ -1,0 +1,225 @@
+#include<iostream>
+
+using namespace std;
+
+// PROGRAM TO IMPLEMENT DOUBLY LINKED LIST
+
+// IN THIS PROGRAM WE HAVE IMPLEMENTED 1. INSERTIONS 2. DELETION 3.TRAVERSAL
+
+
+class Node{
+
+public:
+    int data;
+    Node *next;
+    Node *prev;
+};
+
+
+// FUNCTION TO ADD NODE OR DATA AT HEAD OR FRONT
+
+void addFront(Node **head_ref, int value)
+{
+    Node *new_node = new Node();
+
+    new_node->data = value;
+
+    new_node->next = (*head_ref);
+
+    new_node->prev = NULL;
+
+    if((*head_ref) == NULL){
+
+        (*head_ref)->prev = new_node;
+    }
+
+    (*head_ref) = new_node;
+}
+
+// FUNCTION TO ADD DATA AT THE OF DOUBLY LINKED LIST
+
+void addData(Node **head_ref, int value){
+
+Node *new_node = new Node();
+
+Node *last = *head_ref;
+
+new_node->data = value;
+
+if(*head_ref == NULL){
+
+    new_node->prev = NULL;
+
+    *head_ref = new_node;
+
+    return;
+}
+
+while(last->next){
+    last = last->next;
+}
+
+last->next = new_node;
+
+ new_node->prev = last;
+
+return;
+}
+
+// FUNCTION TO PRINT DLL
+
+void printList(Node* node)
+{
+	Node* last;
+	cout<<"\nTraversal in forward direction \n";
+	while (node != NULL)
+	{
+		cout<<" "<<node->data<<" ";
+		last = node;
+		node = node->next;
+	}
+
+	cout<<"\nTraversal in reverse direction \n";
+	while (last != NULL)
+	{
+		cout<<" "<<last->data<<" ";
+		last = last->prev;
+	}
+
+	cout<<"\n";
+}
+
+// FUNCTION TO ADD DATA OR NODE AT SPECIFIED POSITION
+
+void add_At_Position(Node **head_ref, int position, int value){
+
+int k =1;
+
+Node *new_node = new Node();
+
+new_node->data = value;
+
+Node *temp = (*head_ref);
+
+if(position == 1){
+
+    new_node->next = *head_ref;
+
+    new_node->prev = NULL;
+
+
+    if(*head_ref)
+        (*head_ref)->prev = new_node;
+
+    *head_ref = new_node;
+
+    return;
+}
+// please note that here we are stopping at position - 1 the question is why?
+// because we want the node to be added at given position not after it
+// if we take stopping condition as position then the data would be added at location position + 1
+while((temp->next != NULL) && (k < position -1)){
+    temp = temp->next;
+
+    k++;
+}
+if(k != position -1){
+    std::cout<<"invalid position is given!!!"<<"\n";
+}
+
+new_node->next = temp->next;
+
+new_node->prev = temp;
+
+if(temp->next)
+    temp->next->prev = new_node;
+
+temp->next = new_node;
+
+return;
+}
+
+// FUCNTION TO DELETE NODE VIA PASSING THE NODE TO FUNCTION
+
+void deleteNode(Node**head_ref, Node *del){
+
+if( *head_ref == NULL || del == NULL){
+
+ return;
+}
+
+if (*head_ref == del){
+
+    *head_ref = del->next;
+}
+
+if(del->next != NULL){
+    del->next->prev = del->prev;
+}
+
+if(del->prev != NULL){
+    del->prev->next = del->next;
+}
+
+delete del;
+
+}
+
+// FUNCTION TO DELETE THE NODE VIA PASSING POSITION AND HEAD REFRENCE ALSO ):
+
+void delete_At_Positin(Node **head_ref, int position){
+
+if(*head_ref == NULL || position <= 0){
+    return;
+}
+
+Node *curr = *head_ref;
+
+for (int i =1; curr != NULL && i < position; i++){
+    curr = curr->next;
+}
+
+if(curr == NULL){
+    cout<<"Given position does not exits"<<"\n";
+}
+
+deleteNode(head_ref,curr);
+
+}
+
+// FEEL FREE TO IMPROVE THIS CODE AND IMPLEMENT IN YOUR OWN WAY :) 
+
+int main(){
+
+Node *head = NULL;
+
+addData(&head, 101);
+
+addData(&head, 201);
+
+addData(&head, 202);
+
+addData(&head,301);
+
+printList(head);
+
+
+add_At_Position(&head,2,599);
+
+printList(head);
+
+add_At_Position(&head,6,1999);
+
+printList(head);
+
+delete_At_Positin(&head,2);
+delete_At_Positin(&head,4);
+
+printList(head);
+
+deleteNode(&head, head->next->next->next);
+
+printList(head);
+
+return 0;
+}
