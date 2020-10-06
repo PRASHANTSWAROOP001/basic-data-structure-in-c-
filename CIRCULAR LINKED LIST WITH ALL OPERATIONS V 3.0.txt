@@ -1,0 +1,314 @@
+#include<iostream>
+
+using namespace std;
+
+// PROGRAM TO IMPLEMENT CIRCULARLY LINKED LIST
+
+class Node{
+
+public:
+    int data;
+
+    Node *next;
+
+};
+
+
+void addFront(Node **head_ref,int value){
+
+Node *new_node = new Node();
+
+new_node->data = value;
+
+new_node->next = new_node;
+
+if(*head_ref == NULL){
+    *head_ref = new_node;
+    return;
+}
+else{
+Node *currnode = *head_ref;
+
+while(currnode->next != *head_ref){
+    currnode = currnode->next;
+}
+new_node->next = *head_ref;
+
+currnode->next = new_node;
+
+*head_ref = new_node;
+}
+return;
+}
+
+void addData(Node **head_ref, int value){
+
+Node *curr_node = *head_ref;
+
+Node *new_node = new Node();
+
+new_node->data = value;
+
+new_node->next = new_node;
+
+if(*head_ref == NULL){
+
+    *head_ref = new_node;
+
+}
+else{
+    while(curr_node->next != *head_ref){
+        curr_node = curr_node->next;
+    }
+    new_node->next = *head_ref;
+
+    curr_node->next = new_node;
+}
+
+}
+
+void printList(Node *node){
+
+Node *curr_node = node;
+
+if(node == NULL){
+    cout<<"circular linked list is empty"<<"\n";
+    return;
+}
+else{
+
+do{
+cout<<" "<<curr_node->data;
+curr_node = curr_node->next;
+}while(curr_node != node);
+
+cout<<"\n";
+}
+
+
+}
+int Lenght(Node**head_ref){
+
+int len = 0;
+
+Node *curr_node = *head_ref;
+
+if(*head_ref == NULL){
+    cout<<"circular linked list is empty"<<"\n";
+    return 0;
+}
+do{
+    len++;
+    curr_node = curr_node->next;
+}while(curr_node != *head_ref);
+
+return len;
+
+}
+
+
+void add_at_position(Node**head_ref,int position,int val){
+
+int length = Lenght(head_ref);
+
+length = length +1;
+//to add the data just before the last node we made length = length + 1
+// feel free to test this function with and without length = length +1 
+// test case:- try to add data at last position and before the last position without length = length +1 and with it
+// thanks that is all I have to say about this function 
+
+if(position ==1){
+    addFront(head_ref,val);
+}
+else if(position == length){
+    addData(head_ref,val);
+}
+
+else{
+        int k =1;
+    Node *new_node = new Node();
+
+    new_node->data = val;
+
+    Node *curr_node = *head_ref;
+
+    Node *prev_node;
+
+    while(k<position){
+
+        prev_node = curr_node;
+
+        curr_node = curr_node->next;
+
+        k++;
+    }
+
+    prev_node->next = new_node;
+
+    new_node->next = curr_node;
+
+}
+
+}
+void delete_End(Node**head_ref){
+
+Node *curr_node = *head_ref;
+
+Node *prev_node;
+
+if(*head_ref == NULL){
+    cout<<"Circular linked list is empty"<<"\n";
+    return;
+}
+while(curr_node->next != *head_ref){
+    prev_node = curr_node;
+    curr_node = curr_node->next;
+}
+prev_node->next = curr_node->next;
+delete curr_node;
+
+return;
+}
+
+void delete_Front(Node **head_ref){
+
+Node *temp = *head_ref;
+
+Node *curr_node = *head_ref;
+
+while(curr_node->next != *head_ref){
+    curr_node = curr_node->next;
+}
+curr_node->next = temp->next;
+
+(*head_ref) = (*head_ref)->next;
+
+delete temp;
+
+return;
+
+}
+
+void delete_at_position(Node **head_ref,int position){
+
+int len = Lenght(head_ref) + 1;
+
+if(position == 1){
+    delete_Front(head_ref);
+}
+else if(position == len){
+    delete_End(head_ref);
+}
+else if(position > len ){
+    cout<<"the given position is invalid please reconsider your position value"<<"\n";
+    return;
+}
+else{
+    int k =1;
+    Node *curr_node = *head_ref;
+    Node *pre_node;
+
+    while(k < position){
+        pre_node = curr_node;
+        curr_node = curr_node->next;
+        k++;
+    }
+    pre_node->next = curr_node->next;
+
+    delete curr_node;
+
+    return;
+}
+
+
+}
+
+int main(){
+// PLEASE NOTE ALL THIS COMMANDS HAVE BEEN USED TO DEBUG PROGRAM AND CHECK CORNER CASE 
+
+// FEEL FREE TO DELETE THIS AND GIVE YOU OWN DATA AND CEHCK IT :)
+
+Node *head = NULL; // *head = NULL is essential others can be deleted but please make first element NULL ):
+
+addFront(&head,1010);
+
+addFront(&head, 2001);
+
+addFront(&head, 30001);
+
+addFront(&head,101);
+
+addData(&head, 199);
+
+addData(&head, 299);
+
+addData(&head, 901);
+
+printList(head);
+
+int size = Lenght(&head);
+
+cout<<"size of circular linked list is: "<<size<<"\n";
+
+add_at_position(&head,3,499);
+
+printList(head);
+
+add_at_position(&head,1,50001);
+
+printList(head);
+
+delete_End(&head);
+
+printList(head);
+
+delete_Front(&head);
+
+printList(head);
+
+cout<<"deleting value at position 3"<<"\n";
+
+delete_at_position(&head,3);
+
+printList(head);
+
+
+cout<<"deleting value at position 1"<<"\n";
+
+delete_at_position(&head,1);
+
+printList(head);
+
+cout<<"deleting the last value"<<"\n";
+
+delete_at_position(&head,5);
+
+printList(head);
+
+delete_at_position(&head,6);
+
+printList(head);
+
+cout<<Lenght(&head)<<"\n";
+
+add_at_position(&head,5,786);
+
+printList(head);
+
+add_at_position(&head,4,258);
+
+printList(head);
+
+cout<<"deleting the value at position:5"<<endl;
+delete_at_position(&head,5);
+
+printList(head);
+
+cout<<"deleting the value at position:5"<<endl;
+
+delete_at_position(&head,5);
+
+printList(head);
+
+return 0;
+}
