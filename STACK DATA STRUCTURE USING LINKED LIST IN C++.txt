@@ -1,0 +1,128 @@
+#include<iostream>
+
+using namespace std;
+
+class Node{
+public:
+    int data;
+
+    Node *next;
+
+};
+
+class Stack{
+
+private:
+    Node *head;
+
+public:
+
+Stack(){
+
+head = NULL;
+
+}
+
+void push(int value);
+
+bool isEmpty();
+
+void pop();
+
+void display();
+
+int top();
+
+};
+
+bool Stack:: isEmpty(){
+
+if(head == NULL){
+    return true;
+}
+return false;
+}
+
+void Stack:: push(int value){
+
+Node *temp = new Node();
+
+temp->data = value;
+
+if( head == NULL){
+    temp->next = NULL;
+}
+else{
+    temp->next = head;
+}
+head = temp;
+
+}
+
+void Stack:: pop(){
+
+if(isEmpty() == true){
+    cout<<"stack is empty. stack underflow !!"<<endl;
+}
+else{
+    Node *temp = head;
+
+    head = head->next;
+
+    delete temp;
+}
+
+}
+
+int Stack:: top(){
+
+if(isEmpty() == true){
+    cout<<"the stack is empty"<<"\n";
+    return 0;
+}
+else{
+    return head->data;
+}
+
+}
+
+void Stack:: display(){
+
+cout<<"data stored in stack is"<<"\n";
+
+Node *temp = head;
+
+while(temp != NULL){
+    cout<<temp->data<<endl;
+
+    temp = temp->next;
+}
+cout<<"\n";
+}
+
+int main()
+{
+    Stack s1;
+
+    s1.push(101);
+
+    s1.push(420);
+
+    s1.push(980);
+
+    s1.push(1000);
+
+    s1.display();
+
+    cout<<"value stored at top is: "<<s1.top()<<endl;
+
+    cout<<"the stack is empty: "<<s1.isEmpty()<<endl;
+
+    s1.pop();
+
+    s1.pop();
+
+    s1.display();
+
+    return 0;
+}
