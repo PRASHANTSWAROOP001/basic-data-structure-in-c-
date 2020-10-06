@@ -1,0 +1,195 @@
+#include <iostream>
+#include <bits/stdc++.h>
+
+// PROGRAM FOR SINGLY LINKED LIST
+
+// HERE WE HAVE IMPLEMENTED 1 INSERTION 2 TRAVERSAL 3 DELETION
+
+using namespace std;
+
+class Node{
+
+public:
+
+int data;
+
+Node *next;
+
+};
+// please initialize node data as NUll otherwise the head pointer is having the value of 0
+
+// we can also make a constructor in Node class to avoid this from happening
+
+// while dealing with *head_ref use () for e.g use (*head_ref) or (*head)
+
+
+// FUNCTION TO ADD DATA AT HEAD OR AT ADD FRONT OF LINKDED LIST
+
+void addFront(Node **head_ref, int value){
+
+Node *new_node = new Node();
+
+new_node->data = value;
+
+new_node->next = (*head_ref);
+
+(*head_ref) = new_node;
+
+}
+
+//FUNCTION TO ADD DATA AT SPECIFIED POSITION
+
+void add_At_Position(Node **head_ref,int position, int value){
+
+int length =1;
+
+Node *len_trev = (*head_ref);
+
+while(len_trev != NULL){
+    len_trev = len_trev->next;
+    length++;
+
+}
+
+if(position > length){
+    cout<<"invalid request! please enter valid position"<<endl;
+    exit(0); // NOTE WE CAN USE return; INSTEAD OF IT
+}
+int k =1;
+
+Node *temp_prev;
+
+Node *new_node = new Node();
+
+new_node->data = value;
+
+Node *temp = (*head_ref);
+
+if( position == 1){
+
+    new_node->next = temp;
+
+    (*head_ref) = new_node;
+}
+else{
+    while((temp != NULL) && (k < position)){
+
+        k++;
+
+        temp_prev = temp;
+
+        temp = temp->next;
+
+    }
+
+    temp_prev->next = new_node;
+    new_node->next = temp;
+}
+
+}
+
+// addData IS FUNCTION TO ADD DATA AT THE END OF SINGLY LINKED LIST
+
+void addData(Node**head_ref,int value){
+
+Node *new_node = new Node();
+
+new_node->data = value;
+
+new_node->next = NULL;
+
+Node *last = *head_ref;
+
+if(*head_ref == NULL){
+
+  *head_ref = new_node;
+  return;
+}
+else{
+while(last->next != NULL){
+
+  last = last->next;
+}
+last->next = new_node;
+return;
+}
+}
+
+// FUNCTION TO PRINT THE SINGLY LINKED LIST
+
+void printList(Node *node){
+
+while(node != NULL){
+
+  cout<<" "<<node->data;
+  node = node->next;
+}
+
+}
+
+// FUNCTION TO DELETE NODE OR DATA AT SPECIFIC POSITION
+
+void del_At_Position(Node **head_ref,int position){
+int k = 1;
+
+Node *p,*q;
+
+p = *head_ref;
+
+
+if(position == 1){
+  *head_ref = p->next;
+
+  delete p;
+
+  return;
+
+}
+
+else{
+
+  while((p != NULL) && (k < position)){
+   k++;
+   q = p;
+
+   p = p->next;
+
+  }
+  if( p == NULL){
+    cout<<"postion does not exits"<<"\n";
+  }
+  else{
+    q->next = p->next;
+
+    delete p;
+  }
+}
+
+}
+
+
+int main(){
+
+Node *head =NULL;
+addFront(&head,199);
+addFront(&head,999);
+addFront(&head,1010);
+addData(&head,1);
+addData(&head, 3);
+addData(&head, 9);
+addData(&head,101);
+
+printList(head);
+ cout<<"\n";
+
+ del_At_Position(&head,1);
+ del_At_Position(&head,2);
+ del_At_Position(&head,3);
+
+//del_At_Position(&head,1);
+
+printList(head);
+
+return 0;
+
+}
