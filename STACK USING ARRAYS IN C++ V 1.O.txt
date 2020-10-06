@@ -1,0 +1,111 @@
+#include<iostream>
+
+using namespace std;
+
+#define MAX 10
+
+class Stack{
+
+int top;
+
+public:
+    int arr[MAX];
+
+    Stack(){
+
+    top = -1;
+
+    }
+
+    bool isFull();
+    bool isEmpty();
+    void push(int value);
+    int pop();
+    void display();
+
+};
+
+
+bool Stack:: isFull(){
+
+if(top >= MAX){
+    cout<<"stack is full (overflow) "<<endl;
+
+    return true;
+}
+return false;
+}
+
+bool Stack:: isEmpty(){
+
+if(top < 0){
+    cout<<"stack is empty"<<"\n";
+    return true;
+}
+return false;
+}
+
+void Stack:: push(int value){
+if( isFull() == true){
+    cout<<"the stack is full overflow situation"<<endl;
+}
+else{
+    arr[++top] = value;
+    cout<<"value inserted in stack is: "<<value<<endl;
+}
+}
+
+int Stack:: pop(){
+    if(isEmpty() == true){
+        cout<<"stack is empty underflow situation"<<"\n";
+    }
+else{
+    int d = arr[top--];
+    cout<<"value deleted is: "<<d<<endl;
+    return d;
+}
+
+}
+
+void Stack:: display(){
+
+cout<<"data stored in stack is."<<endl;
+
+for(int i = top; i>= 0; i--){
+    cout<<arr[i]<<"\n";
+}
+cout<<"\n";
+}
+
+int main(){
+
+Stack s1;
+
+s1.push(101);
+
+s1.push(999);
+
+s1.push(1991);
+
+s1.push(401);
+
+s1.push(467);
+
+s1.display();
+
+s1.pop();
+
+s1.pop();
+
+s1.pop();
+
+s1.pop();
+
+s1.pop();
+
+s1.pop();
+
+s1.display();
+
+return 0;
+}
