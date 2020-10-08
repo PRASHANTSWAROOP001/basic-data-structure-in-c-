@@ -1,0 +1,168 @@
+#include<iostream>
+
+#define MAX 20
+
+using namespace std;
+
+class Queue
+{
+    int rear;
+
+    int front;
+
+    int a[MAX];
+
+public:
+
+    Queue()
+    {
+
+        rear = front = -1;
+
+    }
+
+    void enqueue(int value);
+
+    int deque();
+
+    int peek();
+
+    int size();
+
+    bool isEmpty();
+
+    void display();
+
+};
+bool Queue:: isEmpty()
+{
+
+    if(front == -1 || front > rear)
+    {
+        return true;
+    }
+
+    return false;
+
+}
+
+
+void Queue:: enqueue(int value)
+{
+
+    if(front == -1)
+    {
+        front = 0;
+    }
+    if(rear == MAX -1)
+    {
+        cout<<"Queue is full. Overflow."<<endl;
+    }
+    else
+    {
+        a[++rear] = value;
+    }
+
+}
+
+int Queue:: deque()
+{
+
+    if(isEmpty() == true)
+    {
+        cout<<"Queue is empty. Underflow."<<endl;
+        return 0;
+    }
+    else
+    {
+        int x;
+
+        x = a[front];
+
+        cout<<"Deleted or dequeued value is:  "<<x<<endl;
+
+        front++;
+        return x;
+    }
+}
+
+int Queue:: peek()
+{
+
+    if(isEmpty() == true)
+    {
+        return 0;
+    }
+    else
+    {
+
+        int x = a[front];
+
+        cout<<"value at front of queue is: "<<x<<endl;
+
+        return x;
+
+    }
+
+}
+
+int Queue:: size()
+{
+    int len = 0;
+    if(isEmpty() == true)
+    {
+        return 0;
+    }
+    for(int i = front; i<= rear; i++)
+    {
+        len++;
+    }
+
+    cout<<"length of queue is: "<<len<<endl;
+
+    return len;
+}
+
+void Queue:: display()
+{
+
+    if(isEmpty() == true)
+    {
+        cout<<"Queue is empty."<<endl;
+    }
+    for(int i = front; i<= rear; i++)
+    {
+        cout<<" "<<a[i];
+    }
+
+    cout<<endl;
+
+}
+
+int main()
+{
+
+    Queue q1;
+
+    q1.enqueue(101);
+
+    q1.enqueue(201);
+
+    q1.enqueue(501);
+
+    q1.enqueue(1001);
+
+    q1.enqueue(99);
+
+    q1.size();
+
+    q1.display();
+
+    q1.deque();
+
+    q1.deque();
+
+    q1.display();
+
+    return 0;
+}
