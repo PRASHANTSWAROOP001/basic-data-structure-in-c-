@@ -1,0 +1,120 @@
+#include<iostream>
+#include<string.h>
+#include<stdlib.h>
+#include<stdio.h>
+
+using namespace std;
+
+# define MAX 50
+
+int top = -1;
+
+int stack[MAX];
+
+void push(char item)
+{
+
+    if(top == (MAX -1))
+    {
+        cout<<"stack is full"<<endl;
+    }
+    else
+    {
+        top = top+1;
+        stack[top] = item;
+
+    }
+
+}
+
+char pop()
+{
+    if(top == -1)
+    {
+        cout<<"stack is empty Underflow"<<endl;
+    }
+    return stack[top--];
+
+}
+
+bool match_parenthesis(char a, char b)
+{
+
+    if(a == '{' && b == '}')
+    {
+        return true;
+    }
+    if(a == '(' && b == ')')
+    {
+        return true;
+    }
+    if(a == '[' && b == ']')
+    {
+        return true;
+    }
+    return false;
+
+}
+
+bool check_parenthesis(char exp[])
+{
+
+    char temp;
+
+    for(int i =0; i < strlen(exp); i++)
+    {
+        if(exp[i] == '(' || exp[i] == '{' || exp[i] == '[')
+        {
+            push(exp[i]);
+        }
+        if(exp[i] == ')' || exp[i] == '}' || exp[i] == ']')
+            if(top == -1)
+            {
+                cout<<"here we have more ),} and ] parenthesis in expression"<<endl;
+                return false;
+            }
+            else
+            {
+                temp = pop();
+                if(match_parenthesis(temp,exp[i]) == false)
+                {
+                    cout<<"mismatched parenthesis are  :  "<<temp<<exp[i]<<endl;
+                    return false;
+                }
+            }
+    }
+    if(top == -1)
+    {
+        cout<<"Balanced Parenthesis"<<endl;
+        return true;
+    }
+    else
+    {
+        cout<<"Unbalanced Parenthesis"<<endl;
+        cout<<"Or we can say we have more ( , { and { Parenthesis"<<endl;
+        return false;
+    }
+
+}
+
+int main()
+{
+
+    char gexp[MAX];
+
+    cout<<"please enter the expression"<<endl;
+
+    gets(gexp);
+
+    bool x = check_parenthesis(gexp);
+
+    if( x == false)
+    {
+        cout<<"Unbalanced Parenthesis"<<endl;
+    }
+
+
+    return 0;
+
+
+}
