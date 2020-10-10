@@ -27,15 +27,15 @@ public:
 
     }
 
-    void push(int value);
+    void enq(int value);
 
     void display();
 
-    void pop();
+    void deq();
 
 };
 
-void Queue::push(int value)
+void Queue::enq(int value)
 {
 
     Node *new_node = new Node();
@@ -79,7 +79,7 @@ void Queue::display()
     cout<<endl;
 }
 
-void Queue:: pop()
+void Queue:: deq()
 {
     Node *temp = front;
 
@@ -91,7 +91,7 @@ void Queue:: pop()
     {
         temp = temp->next;
 
-        cout<<"Value popped is: "<<front->data<<endl;
+        cout<<"Value dequeued is: "<<front->data<<endl;
 
         delete front;
 
@@ -99,7 +99,7 @@ void Queue:: pop()
     }
     else
     {
-        cout<<"Value popped is: "<<front->data<<endl;
+        cout<<"Value dequeued is: "<<front->data<<endl;
 
         delete front;
 
@@ -114,23 +114,23 @@ int main()
 
     Queue q1;
 
-    q1.push(101);
+    q1.enq(101);
 
-    q1.push(201);
+    q1.enq(201);
 
-    q1.push(901);
+    q1.enq(901);
 
-    q1.push(483396);
+    q1.enq(483396);
 
-    q1.push(258);
+    q1.enq(258);
 
     q1.display();
 
-    q1.pop();
+    q1.deq();
 
-    q1.pop();
+    q1.deq();
 
-    q1.pop();
+    q1.deq();
 
     q1.display();
 
